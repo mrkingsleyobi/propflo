@@ -1,0 +1,71 @@
+{
+  "name": "Propflo Dev Environment",
+  "image": "ghcr.io/pacphi/sindri:3.1.3",
+  "remoteUser": "root",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    }
+  },
+  "customizations": {
+    "openvscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "github.copilot",
+        "github.copilot-chat",
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "dbaeumer.vscode-eslint"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "files.autoSave": "afterDelay"
+      }
+    },
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "github.copilot",
+        "github.copilot-chat",
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+  "forwardPorts": [
+    3000,
+    5173,
+    8000,
+    8080,
+    8888
+  ],
+  "portsAttributes": {
+    "3000": {
+      "label": "Web App"
+    },
+    "5173": {
+      "label": "Vite"
+    },
+    "8000": {
+      "label": "API"
+    },
+    "8080": {
+      "label": "Backend"
+    }
+  },
+  "postCreateCommand": "apt-get update && apt-get install -y git curl jq unzip && npm install -g pnpm yarn && python -m pip install --upgrade pip",
+  "postStartCommand": "echo 'Dev environment ready on DigitalOcean via DevPod'",
+  "mounts": [
+    "source=${localWorkspaceFolder}/.devpod,target=/workspace/.devpod,type=bind,consistency=cached"
+  ],
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+}
