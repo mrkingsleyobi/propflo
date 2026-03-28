@@ -1,8 +1,29 @@
 {
-  "name": "propflo dev environment",
+  "name": "Node.js DevPod Environment",
+  "image": "node:lts",          // Use official Node.js LTS image
+  "remoteUser": "node",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
   "customizations": {
+    "openvscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "github.copilot",
+        "github.copilot-chat"
+      ]
+    },
     "devpod": {
-      "prebuildRepository": "ghcr.io/pacphi/sindri:latest"
+      "prebuildRepository": "ghcr.io/pacphi/sindri:3.1.3" // keeps your prebuild
     }
+  },
+  "forwardPorts": [3000, 8080],
+  "postCreateCommand": "npm install",
+  "remoteEnv": {
+    "NODE_ENV": "development"
   }
 }
